@@ -1,0 +1,41 @@
+body{
+  text-align:center;
+  width:900px;
+  font-family: "Montserrat";
+}
+
+header, footer,nav, aside,section{
+  border:1px solid #999;
+  margin:5px;
+  padding:10px;
+}
+header{
+  height:50px;
+  background-color:aqua;
+}
+nav,section,aside{
+  float: left;
+  height:350px;
+}
+nav{
+  background-color: gold;
+  width:100px;
+}
+section {
+  width:604px;
+}
+aside {
+  background-color:gold;
+  width:100px;
+}
+footer {
+  background-color:grey;
+  height:50px;
+  position:relatiev;
+  clear: both;
+}
+article {
+  width:90px;
+  margin:20px;
+  width:604px;
+}
