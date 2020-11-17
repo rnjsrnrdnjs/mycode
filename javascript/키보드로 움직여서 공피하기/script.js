@@ -28,6 +28,11 @@ window.onload = function () {
     for (i = 0; i < balls.length; i++) {
       balls[i].move().collisionWall(wall).draw(ctx_b);
     }
+    for(i=0;i<NBALL;i++){
+      if(Math.sqrt(Math.abs(myBall.y-balls[i].y)*Math.abs(myBall.y-balls[i].y) + Math.abs(myBall.x-balls[i].x) *Math.abs(myBall.x-balls[i].x) )<=myBall.r+balls[i].r ) {
+        clearInterval(timer);
+      }
+    }
   }
 
   function showKey(e) {
@@ -40,12 +45,6 @@ window.onload = function () {
   }
   function play(c, d) {
     var dyx = [[0, -1], [-1, 0], [0, 1], [1, 0]];
-    for(i=0;i<NBALL;i++){
-      if(Math.sqrt(Math.abs(myBall.y-balls[i].y)*Math.abs(myBall.y-balls[i].y) + Math.abs(myBall.x-balls[i].x) *Math.abs(myBall.x-balls[i].x) )<=myBall.r+balls[i].r ) {
-        clearInterval(timer);
-      }
-    }
-    
     myBall.y += 10 * dyx[d][0];
     myBall.x += 10 * dyx[d][1];
     c.lineTo(myBall.y, myBall.x);
