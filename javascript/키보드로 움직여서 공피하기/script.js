@@ -2,7 +2,7 @@ window.onload = function () {
   document.addEventListener("keydown", showKey, false);
 
 
-  var NBALL = 50;
+  var NBALL = 30;
   var R = 5;
   var TIME_INTERVAL = 33;
   var BACK_ALPHA = 0.3;
@@ -11,7 +11,7 @@ window.onload = function () {
   var wall = { left: 0, right: ballCanvas.width, top: 0, bottom: ballCanvas.height };
   var balls = [];
   var myBall;
-  myBall = new Ball(100, 100, R + 3);
+  myBall = new Ball(100, 100, R -1 );
   myBall.setColorAsRandom(255, 255);
   
 
