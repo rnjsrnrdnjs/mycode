@@ -1,6 +1,15 @@
+
+var imgCat=new Image();
+var imgMouse=new Image();
+var imgCheese=new Image();
+var imgBrush=new Image();
+var canvas;var ctx;
+var mouseX=10,mouseY=10;
+
+
 //화면을 구성하는요소를 생성하고 요소에 이벤트 리스너를 등록한다.
 function createPainter(parent,width,height){
-  var title=elt("h2",null,"Simple Painter");
+  var title=elt("h2",null,"치즈의적 고양이");
   var [canvas,ctx]=createCanvas(width,height);
   var toolbar=elt("div",null);
   for(var name in controls){
@@ -10,10 +19,40 @@ function createPainter(parent,width,height){
   toolbar.style.marginBottom="3px";
   parent.appendChild(elt("div",null,title,toolbar,canvas));
 }
+// 쥐 움직이기
+function showKey(e){
+    var d;
+    if(e.keyCode==37)d=0;
+    else if(e.keyCode==38)d=1;
+    else if(e.keyCode==39)d=2;
+    else if(e.keyCode==40)d=3;
+    var dyx=[[0,-1],[-1,0],[0,1],[1,0]];
+    mouseY+=5*dyx[d][0];
+    mouseX+=5*dyx[d][1];
+    ctx.clearRect(mouseX-10,mouseY-10,60,60);
+    ctx.drawImage(imgMouse,mouseX,mouseY,40,40);
+}
+//무작위 고양이 움직이기
+function randomCatMove(){
+
+}
+
 function createCanvas(canvasWidth,canvasHeight){
-  var canvas=elt("canvas",{width:canvasWidth,height:canvasHeight});
-  var ctx=canvas.getContext("2d");
-  canvas.style.border="1px solid gray";
+  canvas=elt("canvas",{width:canvasWidth,height:canvasHeight});
+  ctx=canvas.getContext("2d");
+  
+  imgCat.src="cat.jpg";
+  imgMouse.src="mouse.jpg";
+  imgCheese.src="cheese.jpg";
+  imgBrush.src="brush.jpg";
+
+  imgMouse.onload=function(){
+    ctx.drawImage(imgMouse,10,10,40,40);
+  }
+  imgCheese.onload=function(){
+    ctx.drawImage(imgCheese,950,550,40,40)
+  }
+  canvas.style.border="10px solid gray";
   canvas.style.cursor="pointer";
   canvas.addEventListener("mousedown",function(e){
     var event=document.createEvent("HTMLEvents");
