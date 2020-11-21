@@ -28,6 +28,7 @@ function createPainter(parent, width, height) {
 //쥐 이동
 function showKey(e) {
   if (!isMousedown) {
+    
     var d;
     if (e.keyCode == 37) d = 0;
     else if (e.keyCode == 38) d = 1;
@@ -37,26 +38,33 @@ function showKey(e) {
     ctx.clearRect(mouseX, mouseY, 40, 40);
     mouseY += 5 * dyx[d][0];
     mouseX += 5 * dyx[d][1];
+
+    console.log(ctx.getImageData(mouseX -5, mouseY , 1, 1).data);
+    console.log(ctx.getImageData(mouseX , mouseY - 5, 1, 1).data);
+    console.log(ctx.getImageData(mouseX -5, mouseY + 45, 1, 1).data);
+    console.log(ctx.getImageData(mouseX +45, mouseY + -5, 1, 1).data);
+    
+
     for (var i = 0; i < 40; i++) {
       if (d == 0) {
-        if (ctx.getImageData(mouseX, mouseY + i, 1, 1).data[1] != 0 ||
-          ctx.getImageData(mouseX, mouseY + i, 1, 1).data[2] != 0 ||
-          ctx.getImageData(mouseX, mouseY + i, 1, 1).data[3] != 0) chk = true;
+        if (ctx.getImageData(mouseX, mouseY + i, 1, 1).data[1] == 0 &&
+          ctx.getImageData(mouseX, mouseY + i, 1, 1).data[2] == 0 &&
+          ctx.getImageData(mouseX, mouseY + i, 1, 1).data[3] == 255) chk = true;
       }
       if (d == 1) {
-        if (ctx.getImageData(mouseX + i, mouseY, 1, 1).data[1] != 0 ||
-          ctx.getImageData(mouseX + i, mouseY, 1, 1).data[2] != 0 ||
-          ctx.getImageData(mouseX + i, mouseY, 1, 1).data[3] != 0) chk = true;
+        if (ctx.getImageData(mouseX + i, mouseY, 1, 1).data[1] == 0 &&
+          ctx.getImageData(mouseX + i, mouseY, 1, 1).data[2] == 0 &&
+          ctx.getImageData(mouseX + i, mouseY, 1, 1).data[3] == 255) chk = true;
       }
       if (d == 2) {
-        if (ctx.getImageData(mouseX + 40, mouseY + i, 1, 1).data[1] != 0 ||
-          ctx.getImageData(mouseX + 40, mouseY + i, 1, 1).data[2] != 0 ||
-          ctx.getImageData(mouseX + 40, mouseY + i, 1, 1).data[3] != 0) chk = true;
+        if (ctx.getImageData(mouseX + 40, mouseY + i, 1, 1).data[1] == 0 &&
+          ctx.getImageData(mouseX + 40, mouseY + i, 1, 1).data[2] == 0 &&
+          ctx.getImageData(mouseX + 40, mouseY + i, 1, 1).data[3] == 255) chk = true;
       }
       if (d == 3) {
-        if (ctx.getImageData(mouseX + i, mouseY + 40, 1, 1).data[1] != 0 ||
-          ctx.getImageData(mouseX + i, mouseY + 40, 1, 1).data[2] != 0 ||
-          ctx.getImageData(mouseX + i, mouseY + 40, 1, 1).data[3] != 0) chk = true;
+        if (ctx.getImageData(mouseX + i, mouseY + 40, 1, 1).data[1] == 0 &&
+          ctx.getImageData(mouseX + i, mouseY + 40, 1, 1).data[2] == 0 &&
+          ctx.getImageData(mouseX + i, mouseY + 40, 1, 1).data[3] == 255) chk = true;
       }
     }
     if (mouseY + 40 >= 600 || mouseX + 40 >= 1000 || mouseY <= 0 || mouseX <= 0 || chk) {
@@ -85,22 +93,18 @@ function randomCatMove() {
     var d = Math.floor(Math.random() * 4);
     var chk = false;
     ctx.clearRect(catYX[i][1], catYX[i][0], 40, 40);
-    catYX[i][0] += (3 * (i + 2)) * dyx[d][0];
-    catYX[i][1] += (3 * (i + 2)) * dyx[d][1];
+    catYX[i][0] += (3 * (i + 2)) * dyx[d][0]*2;
+    catYX[i][1] += (3 * (i + 2)) * dyx[d][1]*2;
     for (let j = -3; j < 42; j++) {
       for (let k = -3; k < 42; k++) {
-        if(ctx.getImageData(catYX[i][1]+j, catYX[i][0] + k, 1,1).data[1] !=0 ||
-        ctx.getImageData(catYX[i][1]+j, catYX[i][0] + k, 1,1).data[2] !=0 ||
-        ctx.getImageData(catYX[i][1]+j, catYX[i][0] + k, 1,1).data[3] !=0  )chk=true;
+        if(ctx.getImageData(catYX[i][1]+j, catYX[i][0] + k, 1,1).data[1] ==0 &&
+        ctx.getImageData(catYX[i][1]+j, catYX[i][0] + k, 1,1).data[2] ==0 &&
+        ctx.getImageData(catYX[i][1]+j, catYX[i][0] + k, 1,1).data[3] ==255  )chk=true;
       }
     }
-    if (catYX[i][0] + 40 >= 545 && catYX[i][1] + 40 >= 945) {
-      catYX[i][0] += (3 * (i + 2)) * dyx[(d + 2) % 4][0] * 2;
-      catYX[i][1] += (3 * (i + 2)) * dyx[(d + 2) % 4][1] * 2;
-    }
-    else if (catYX[i][0] + 40 >= 600 || catYX[i][1] + 40 >= 1000 || catYX[i][0] <= 0 || catYX[i][1] <= 0 || chk) {
-      catYX[i][0] += (3 * (i + 1)) * dyx[(d + 2) % 4][0] * 2;
-      catYX[i][1] += (3 * (i + 1)) * dyx[(d + 2) % 4][1] * 2;
+    if ( (catYX[i][0] + 40 >= 545 && catYX[i][1] + 40 >= 945) || catYX[i][0] + 40 >= 600 || catYX[i][1] + 40 >= 1000 || catYX[i][0] <= 0 || catYX[i][1] <= 0 || chk) {
+      catYX[i][0] += (3 * (i + 2)) * dyx[(d + 2) % 4][0]*2;
+      catYX[i][1] += (3 * (i + 2)) * dyx[(d + 2) % 4][1]*2;
     }
     ctx.drawImage(imgCat[i], catYX[i][1], catYX[i][0], 40, 40);
   }
